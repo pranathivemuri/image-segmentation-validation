@@ -56,3 +56,17 @@ _version.py
 
 # Jupyter ipython notebooks
 .ipynb_checkpoints
+
+# Unit test / coverage reports
+cover/
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+coverage
+.pytest_cache*
+.coverage

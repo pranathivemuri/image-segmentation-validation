@@ -34,7 +34,7 @@ def test_ipynb():
     src = os.getcwd()
     for root, dirnames, filenames in os.walk(src):
         for filename in fnmatch.filter(filenames, '*.ipynb'):
-            path = os.path.join(src, filename)
+            path = os.path.join(root, filename)
             print("Detected ipython notebook {} to run tests on".format(path))
             nb, errors = _notebook_run(path)
             assert errors == []
