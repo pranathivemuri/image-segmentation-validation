@@ -30,16 +30,19 @@ def _notebook_run(path):
     return nb, errors
 
 
-def test_ipynb():
+def run_ipynb():
     src = os.getcwd()
     for root, dirnames, filenames in os.walk(src):
-        if not root.endswith(".ipynb_checkpoints"):
-            for filename in fnmatch.filter(filenames, '*.ipynb'):
-                path = os.path.join(root, filename)
-                print("Detected ipython notebook {} to run tests on".format(path))
-                nb, errors = _notebook_run(path)
-                print("Percentage of errored cells is {}".format(100 * (len(errors) / len(nb.cells))))
-                assert errors == []
+        # Do not run notebooks in ipynb_checkpoints
+        if root.endswith(".ipynb_checkpoints"):
+            continue
+        for filename in fnmatch.filter(filenames, '*.ipynb'):
+            path = os.path.join(root, filename)
+            print("Detected ipython notebook {} to run tests on".format(path))
+            nb, errors = _notebook_run(path)
+            print("Percentage of errored cells is {}".format(100 * (len(errors) / len(nb.cells))))
+            assert errors == []
 
 if __name__ == '__main__':
-    test_ipynb()
+    # Runs all cells in all the ipython notebooks in the current directory
+    run_ipynb()
