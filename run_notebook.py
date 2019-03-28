@@ -43,6 +43,7 @@ def run_ipynb():
             print("Percentage of errored cells is {}".format(100 * (len(errors) / len(nb.cells))))
             assert errors == []
 
+
 if __name__ == '__main__':
     # Runs all cells in all the ipython notebooks in the current directory
     run_ipynb()
