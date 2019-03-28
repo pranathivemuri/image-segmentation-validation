@@ -21,7 +21,7 @@ def _notebook_run(path):
         subprocess.check_call(args)
 
         fout.seek(0)
-        nb = nbformat.read(fout, nbformat.current_nbformat)
+        nb = nbformat.read(fout.name, nbformat.current_nbformat)
 
     errors = [
         output for cell in nb.cells if "outputs" in cell
@@ -33,8 +33,13 @@ def _notebook_run(path):
 def test_ipynb():
     src = os.getcwd()
     for root, dirnames, filenames in os.walk(src):
-        for filename in fnmatch.filter(filenames, '*.ipynb'):
-            path = os.path.join(root, filename)
-            print("Detected ipython notebook {} to run tests on".format(path))
-            nb, errors = _notebook_run(path)
-            assert errors == []
+        if not root.endswith(".ipynb_checkpoints"):
+            for filename in fnmatch.filter(filenames, '*.ipynb'):
+                path = os.path.join(root, filename)
+                print("Detected ipython notebook {} to run tests on".format(path))
+                nb, errors = _notebook_run(path)
+                print("Percentage of errored cells is {}".format(100 * (len(errors) / len(nb.cells))))
+                assert errors == []
+
+if __name__ == '__main__':
+    test_ipynb()

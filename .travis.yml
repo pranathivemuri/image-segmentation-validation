@@ -9,6 +9,9 @@ script:
   - flake8 --config .flake8
   # command to run tests
   - nosetests --with-coverage --cover-erase --cover-package=image-segmentation-validation --cover-html
+  # command to run notebooks, cells containing test functions if called are also run
+  - python3 run_notebook.py
+
 
 # operating system tested on
 os: linux
